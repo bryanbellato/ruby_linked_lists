@@ -107,8 +107,64 @@ class LinkedList
         end
     end
 
-    # Possible next functions:
-    # insert_at(value, index) that inserts a new node with the provided value at the given index.
-    # remove_at(index) that removes the node at the given index.
+    def insert_at(value, index)
+        if index < 0 || index > @size
+          return "Index out of bounds"
+        end
+      
+        if index == 0
+          prepend(value)
+          return
+        end
+      
+        current = @head
+        (0...index - 1).each do |i|
+          if current == nil
+            return "Index out of bounds"
+          end
+          current = current.next_node
+        end
+      
+        new_node = Node.new(value)
+        new_node.next_node = current.next_node
+        current.next_node = new_node
+      
+        if current == @tail
+          @tail = new_node
+        end
+      
+        @size += 1
+      end      
 
-end
+    def remove_at(index)
+        if index < 0 || index >= @size
+            return "Index out of bounds"
+        end
+        
+        if index == 0
+            @head = @head.next_node
+            if @head == nil
+                @tail = nil
+            end
+            
+            @size -= 1
+            return
+        end
+      
+        current = @head
+        (0...index - 1).each do |i|
+            if current == nil
+                return "Index out of bounds"
+            end
+            current = current.next_node
+        end
+      
+        current.next_node = current.next_node.next_node
+      
+        if current.next_node == nil
+          @tail = current
+        end
+      
+        @size -= 1
+      end
+    end
