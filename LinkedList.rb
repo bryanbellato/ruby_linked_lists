@@ -35,8 +35,18 @@ class LinkedList
     end
 
     def at(index)
-
-    end
+        if index < 0 || index >= @size
+          puts "Index out of bounds"
+          return
+        end
+      
+        current = @head
+        (0...index).each do |i|
+          current = current.next_node
+        end
+      
+        puts current.data
+      end      
 
     def pop(value)
         if @head == nil
@@ -66,11 +76,27 @@ class LinkedList
     end
 
     def contains?(value)
-
-    end
+        current = head
+        while current != nil
+            if current.data == value
+                return true
+            end
+            current = current.next_node
+        end
+        return false
+    end    
 
     def find(value)
-
+        current = head
+        index = 0
+        while current != nil
+            if current.data == value
+                return index
+            end
+            current = current.next_node
+            index += 1
+        end
+        puts "Value not found"
     end
 
     def to_s
